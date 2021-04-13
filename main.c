@@ -55,7 +55,7 @@ void print_usage(char *path) {
 }
 
 void parse_args(int argc, char** argv, struct arguments *args) {
-    if (argc != 3)
+    if (argc != 2)
         print_usage(argv[0]);
 
     size_t mapping_size = sizeof(mapping) / sizeof(mapping[0]);
@@ -70,7 +70,6 @@ void parse_args(int argc, char** argv, struct arguments *args) {
     if (!found)
         print_usage(argv[0]);
 
-    args->script_path = argv[2];
 }
 
 int handle_callback(xeb_event_type event, void *data) {
@@ -86,7 +85,7 @@ int handle_callback(xeb_event_type event, void *data) {
             exit(EXIT_FAILURE);
             break;
         case 0: // Child
-            err = execlp(args->script_path, args->script_path, NULL);
+            err = system("sleep 0.5 && nitrogen --restore");
             if (err == -1) {
                 perror("Failed to open callback script\n");
                 exit(EXIT_FAILURE);
@@ -105,4 +104,3 @@ int main(int argc, char **argv) {
 
     return xeb_loop() ? EXIT_FAILURE : EXIT_SUCCESS;    
 }
-
