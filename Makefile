@@ -13,5 +13,8 @@ xeventbind: $(OBJ)
 %.o: %.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 
+install:
+	cp ./xeventbind /usr/bin/xeventbind
+
 clean:
 	rm -f xeventbind *.o
